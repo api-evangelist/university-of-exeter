@@ -1,0 +1,82 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "exeter": "https://www.exeter.ac.uk/ns/vocab#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "sameAs": "schema:sameAs",
+    "logo": "schema:logo",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "Organization": "schema:Organization",
+    "address": "schema:address",
+    "location": "schema:location",
+    "department": "schema:department",
+    "api": {
+      "@id": "exeter:api",
+      "@container": "@set"
+    },
+    "API": "exeter:API",
+    "humanURL": {
+      "@id": "exeter:humanURL",
+      "@type": "@id"
+    },
+    "baseURL": {
+      "@id": "exeter:baseURL",
+      "@type": "@id"
+    },
+    "tags": {
+      "@id": "exeter:tags",
+      "@container": "@set"
+    },
+    "repository": {
+      "@id": "exeter:repository",
+      "@type": "schema:DataCatalog"
+    },
+    "identityProvider": "exeter:identityProvider",
+    "Dataset": "schema:Dataset",
+    "DataCatalog": "schema:DataCatalog",
+    "Thesis": "schema:Thesis",
+    "ScholarlyArticle": "schema:ScholarlyArticle"
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of Exeter",
+  "url": "https://www.exeter.ac.uk/",
+  "description": "Public research university in Devon, United Kingdom, and a member of the Russell Group. Operates the Open Research Exeter (ORE) DSpace repository, a Shibboleth/SAML identity provider, and the MyExeter mobile app backend.",
+  "sameAs": [
+    "https://github.com/Uni-of-Exeter",
+    "https://www.linkedin.com/school/university-of-exeter/",
+    "https://twitter.com/UniofExeter"
+  ],
+  "api": [
+    {
+      "@type": "API",
+      "name": "Open Research Exeter (ORE) OAI-PMH",
+      "humanURL": "https://ore.exeter.ac.uk/repository/",
+      "baseURL": "https://ore.exeter.ac.uk/repository/oai/request",
+      "tags": ["Research", "Repository", "OAI-PMH", "Open Data", "DSpace", "Metadata"]
+    },
+    {
+      "@type": "API",
+      "name": "Open Research Exeter (ORE) DSpace REST API",
+      "humanURL": "https://ore.exeter.ac.uk/repository/",
+      "baseURL": "https://ore.exeter.ac.uk/server/api",
+      "tags": ["Research", "Repository", "REST", "Open Data", "DSpace"]
+    },
+    {
+      "@type": "API",
+      "name": "University of Exeter Shibboleth Identity Provider (SAML SSO)",
+      "humanURL": "https://libguides.exeter.ac.uk/eresources/shibboleth",
+      "baseURL": "https://elibrary.exeter.ac.uk/idp/shibboleth",
+      "tags": ["Identity", "SAML", "Shibboleth", "SSO", "Authentication"]
+    },
+    {
+      "@type": "API",
+      "name": "MyExeter Mobile App Backend",
+      "humanURL": "https://www.exeter.ac.uk/students/myexeter/",
+      "baseURL": "https://m.exeter.ac.uk/",
+      "tags": ["Mobile", "Student", "Timetable", "Campus", "Private"]
+    }
+  ]
+}

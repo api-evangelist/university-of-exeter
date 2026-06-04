@@ -1,0 +1,14 @@
+{
+  "repo": "university-of-exeter",
+  "feeds": [
+    {
+      "source": "https://news.exeter.ac.uk/",
+      "feed_url": "https://news.exeter.ac.uk/feed/",
+      "title": "University of Exeter News",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}
