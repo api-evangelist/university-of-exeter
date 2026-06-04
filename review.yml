@@ -1,0 +1,48 @@
+---
+name: University of Exeter
+description: University of Exeter public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      The University of Exeter has no dedicated public developer portal or
+      packaged API program. Confirmed live: the official website
+      (www.exeter.ac.uk, 200), the MyExeter mobile backend host
+      (m.exeter.ac.uk, 200), and the official GitHub organization
+      Uni-of-Exeter (200, verified via GitHub API with blog www.exeter.ac.uk
+      and twitter UniofExeter, 2 public repos including WSO2 MI artifacts).
+      The Open Research Exeter (ORE) DSpace repository host responds but
+      returns HTTP 202 with empty bodies on OAI-PMH/REST probes, indicating a
+      bot-mitigation gateway, so DSpace OAI-PMH and REST endpoints are
+      documented per platform defaults but could not be confirmed live. A
+      Shibboleth/SAML Identity Provider exists for federated library/SSO
+      access. No endpoints were fabricated; gated and unverified surfaces are
+      flagged honestly.
+    endpoints:
+      - url: https://www.exeter.ac.uk/
+        status: 200
+        note: Official institutional website, confirmed live.
+      - url: https://m.exeter.ac.uk/
+        status: 200
+        note: MyExeter mobile app host; backend APIs are private/undocumented.
+      - url: https://ore.exeter.ac.uk/repository/
+        status: 202
+        note: ORE DSpace repository behind bot-mitigation gateway (empty body).
+      - url: https://ore.exeter.ac.uk/repository/oai/request?verb=Identify
+        status: 202
+        note: DSpace OAI-PMH path; returned 202 empty body, not confirmable live.
+      - url: https://ore.exeter.ac.uk/server/api
+        status: 202
+        note: DSpace REST API path; returned 202 empty body, not confirmable live.
+      - url: https://elibrary.exeter.ac.uk/idp/shibboleth
+        status: 0
+        note: Shibboleth SAML IdP entityID; gated federated identity, not a public API.
+      - url: https://github.com/Uni-of-Exeter
+        status: 200
+        note: Official GitHub org, verified via GitHub API (2 public repos).
+      - url: https://www.linkedin.com/school/university-of-exeter/
+        status: 999
+        note: Valid LinkedIn school page; 999 is LinkedIn's automated-request block.

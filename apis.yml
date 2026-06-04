@@ -1,0 +1,114 @@
+---
+aid: university-of-exeter
+name: University of Exeter
+description: >-
+  The University of Exeter is a public research university in Devon, United
+  Kingdom, and a member of the Russell Group, ranked #169 in the QS World
+  University Rankings 2025. Its public developer/API footprint is modest and
+  largely institutional rather than a packaged developer program: there is no
+  dedicated public developer portal. Confirmed surfaces include the Open
+  Research Exeter (ORE) DSpace repository, which exposes standard DSpace
+  OAI-PMH and REST interfaces for harvesting research outputs and metadata;
+  federated identity via a Shibboleth/SAML Identity Provider; the MyExeter
+  mobile application backend; and an official GitHub organization that
+  publishes some middleware and research code (including WSO2 Micro
+  Integrator artifacts).
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Open Data
+  - Repository
+  - Identity
+  - United Kingdom
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-exeter:ore-oai-pmh
+    name: Open Research Exeter (ORE) OAI-PMH
+    description: >-
+      Open Research Exeter (ORE) is the University of Exeter's institutional
+      repository, built on DSpace, holding research papers, theses, and
+      research data. As a DSpace repository it provides a standard OAI-PMH
+      interface for metadata harvesting. The endpoint host responds but is
+      protected by a bot-mitigation gateway, so the live verb responses could
+      not be fully confirmed during this review.
+    humanURL: https://ore.exeter.ac.uk/repository/
+    baseURL: https://ore.exeter.ac.uk/repository/oai/request
+    tags: [ Research, Repository, OAI-PMH, Open Data, DSpace, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://www.exeter.ac.uk/research/researchdatamanagement/after/discovery/
+  - aid: university-of-exeter:ore-rest
+    name: Open Research Exeter (ORE) DSpace REST API
+    description: >-
+      The Open Research Exeter DSpace platform exposes the standard DSpace
+      REST API for programmatic access to communities, collections, items,
+      and bitstreams. The repository host is reachable but sits behind a
+      bot-mitigation gateway, so the REST API surface could not be fully
+      verified live during this review and is documented per DSpace defaults.
+    humanURL: https://ore.exeter.ac.uk/repository/
+    baseURL: https://ore.exeter.ac.uk/server/api
+    tags: [ Research, Repository, REST, Open Data, DSpace ]
+    properties:
+      - type: Documentation
+        url: https://www.exeter.ac.uk/research/researchdatamanagement/after/discovery/
+  - aid: university-of-exeter:shibboleth-idp
+    name: University of Exeter Shibboleth Identity Provider (SAML SSO)
+    description: >-
+      The University of Exeter operates a SAML-based federated identity
+      service via a Shibboleth Identity Provider used for single sign-on to
+      library electronic resources and federated services through the UK
+      Access Management Federation. Access is gated to institutional members
+      and federation service providers; it is not a self-service developer API.
+    humanURL: https://libguides.exeter.ac.uk/eresources/shibboleth
+    baseURL: https://elibrary.exeter.ac.uk/idp/shibboleth
+    tags: [ Identity, SAML, Shibboleth, SSO, Authentication ]
+    properties:
+      - type: Documentation
+        url: https://libguides.exeter.ac.uk/eresources/shibboleth
+  - aid: university-of-exeter:myexeter-app
+    name: MyExeter Mobile App Backend
+    description: >-
+      MyExeter is the University of Exeter's student mobile application,
+      served from m.exeter.ac.uk, providing timetables, campus services, and
+      student information. It is backed by undocumented private mobile-app
+      APIs intended for the official app only; no public developer
+      documentation or self-service access is published.
+    humanURL: https://www.exeter.ac.uk/students/myexeter/
+    baseURL: https://m.exeter.ac.uk/
+    tags: [ Mobile, Student, Timetable, Campus, Private ]
+    properties:
+      - type: Documentation
+        url: https://www.exeter.ac.uk/students/myexeter/
+common:
+  - type: Website
+    url: https://www.exeter.ac.uk/
+  - type: GitHub
+    url: https://github.com/Uni-of-Exeter
+  - type: SourceCode
+    url: https://github.com/Uni-of-Exeter
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-exeter/
+  - type: Twitter
+    url: https://twitter.com/UniofExeter
+  - type: Authentication
+    url: https://libguides.exeter.ac.uk/eresources/shibboleth
+  - type: Plans
+    url: plans/university-of-exeter-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-exeter-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-exeter-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
