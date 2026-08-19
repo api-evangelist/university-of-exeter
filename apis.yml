@@ -41,7 +41,7 @@ tags:
   - United Kingdom
 created: '2026-06-03'
 modified: '2026-06-03'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: university-of-exeter:ore-oai-pmh
     name: Open Research Exeter (ORE) OAI-PMH
