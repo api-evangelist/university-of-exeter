@@ -96,7 +96,18 @@ apis:
       documentation or self-service access is published.
     humanURL: https://www.exeter.ac.uk/students/myexeter/
     baseURL: https://m.exeter.ac.uk/
-    tags: [ Mobile, Student, Timetable, Campus, Private ]
+    tags:
+    - Mobile
+    - Students
+    - Timetable
+    - Campus
+    - Private
+    tags_raw:
+    - Mobile
+    - Student
+    - Timetable
+    - Campus
+    - Private
     properties:
       - type: Documentation
         url: https://www.exeter.ac.uk/students/myexeter/
