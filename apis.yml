@@ -109,7 +109,7 @@ apis:
     baseURL: https://m.exeter.ac.uk/
     tags:
     - Mobile
-    - Students
+    - Student
     - Timetable
     - Campus
     - Private
