@@ -1,133 +1,269 @@
 ---
 aid: university-of-exeter
 name: University of Exeter
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Exeter is a public research university in Devon, United
-  Kingdom, and a member of the Russell Group, ranked #169 in the QS World
-  University Rankings 2025. Its public developer/API footprint is modest and
-  largely institutional rather than a packaged developer program: there is no
-  dedicated public developer portal. Confirmed surfaces include the Open
-  Research Exeter (ORE) DSpace repository, which exposes standard DSpace
-  OAI-PMH and REST interfaces for harvesting research outputs and metadata;
-  federated identity via a Shibboleth/SAML Identity Provider; the MyExeter
-  mobile application backend; and an official GitHub organization that
-  publishes some middleware and research code (including WSO2 Micro
-  Integrator artifacts).
+  The University of Exeter is a public research university in Devon, United Kingdom,
+  and a member of the Russell Group, with campuses at Streatham and St Luke's in Exeter
+  and Penryn in Cornwall. It operates no public developer portal and publishes no
+  OpenAPI, and most of what appears to be an Exeter API is a vendor platform running
+  under an exeter.ac.uk hostname. What Exeter genuinely operates is: a Cognito-protected
+  platform API at api.exeter.ac.uk behind the MyExeter app (campus events, space
+  occupancy, notifications, profile - every route returns 401 without a token and none
+  are documented); its own Shibboleth SAML identity provider, published in both the UK
+  Access Management Federation and InCommon/eduGAIN metadata; a Microsoft Entra ID
+  tenant fronting SSO for timetabling; a Moodle VLE at ele.exeter.ac.uk that is a live
+  LTI 1.3 platform and exposes Moodle's own web-service endpoint; and a public
+  WordPress REST API on its news site. Its research repository Open Research Exeter is
+  a Figshare tenancy, and its expert profiles are a Symplectic Elements tenancy -
+  neither contract is Exeter's engineering. Exeter also maintains a hand-authored
+  llms.txt with explicit guidance for agents, which is rare in this cohort.
 type: Index
 deliveryModel:
   model: saas
   open_source: false
-  commercial: true
-  callable_host: false
-  label: Hosted service · you call their endpoint
-  confidence: medium
+  commercial: false
+  callable_host: true
+  label: Institution-operated endpoints - credentialed, not self-service
+  confidence: high
   source:
-  - pricing
-  generated: '2026-08-28'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: none
   trial: false
   try_now: false
   public: false
-  label: Free
-  confidence: medium
+  label: No self-service access - institutional affiliation or federation membership required
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-exeter.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
   - Research
-  - Open Data
-  - Repository
-  - Identity
   - United Kingdom
+  - Russell Group
+  - Identity Federation
+  - Research Repository
+  - Learning Management
+  - Campus Life
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
-  - aid: university-of-exeter:ore-oai-pmh
-    name: Open Research Exeter (ORE) OAI-PMH
+  - aid: university-of-exeter:myexeter-platform-api
+    name: MyExeter Platform API
+    x-operator: institution
     description: >-
-      Open Research Exeter (ORE) is the University of Exeter's institutional
-      repository, built on DSpace, holding research papers, theses, and
-      research data. As a DSpace repository it provides a standard OAI-PMH
-      interface for metadata harvesting. The endpoint host responds but is
-      protected by a bot-mitigation gateway, so the live verb responses could
-      not be fully confirmed during this review.
-    humanURL: https://ore.exeter.ac.uk/repository/
-    baseURL: https://ore.exeter.ac.uk/repository/oai/request
-    tags: [ Research, Repository, OAI-PMH, Open Data, DSpace, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://www.exeter.ac.uk/research/researchdatamanagement/after/discovery/
-  - aid: university-of-exeter:ore-rest
-    name: Open Research Exeter (ORE) DSpace REST API
-    description: >-
-      The Open Research Exeter DSpace platform exposes the standard DSpace
-      REST API for programmatic access to communities, collections, items,
-      and bitstreams. The repository host is reachable but sits behind a
-      bot-mitigation gateway, so the REST API surface could not be fully
-      verified live during this review and is documented per DSpace defaults.
-    humanURL: https://ore.exeter.ac.uk/repository/
-    baseURL: https://ore.exeter.ac.uk/server/api
-    tags: [ Research, Repository, REST, Open Data, DSpace ]
-    properties:
-      - type: Documentation
-        url: https://www.exeter.ac.uk/research/researchdatamanagement/after/discovery/
-  - aid: university-of-exeter:shibboleth-idp
-    name: University of Exeter Shibboleth Identity Provider (SAML SSO)
-    description: >-
-      The University of Exeter operates a SAML-based federated identity
-      service via a Shibboleth Identity Provider used for single sign-on to
-      library electronic resources and federated services through the UK
-      Access Management Federation. Access is gated to institutional members
-      and federation service providers; it is not a self-service developer API.
-    humanURL: https://libguides.exeter.ac.uk/eresources/shibboleth
-    baseURL: https://elibrary.exeter.ac.uk/idp/shibboleth
-    tags: [ Identity, SAML, Shibboleth, SSO, Authentication ]
-    properties:
-      - type: Documentation
-        url: https://libguides.exeter.ac.uk/eresources/shibboleth
-  - aid: university-of-exeter:myexeter-app
-    name: MyExeter Mobile App Backend
-    description: >-
-      MyExeter is the University of Exeter's student mobile application,
-      served from m.exeter.ac.uk, providing timetables, campus services, and
-      student information. It is backed by undocumented private mobile-app
-      APIs intended for the official app only; no public developer
-      documentation or self-service access is published.
+      api.exeter.ac.uk is an institution-operated AWS API Gateway deployment in eu-west-2
+      that serves the MyExeter student app (the Flutter PWA at m.exeter.ac.uk and the iOS
+      and Android builds). Routes evidenced from the shipped application bundle and
+      confirmed live by status code include /content/posts/news, /content/posts/events,
+      /content/posts/banners, /content/spacedata/all, /spaces/get-occupancy-data, /events,
+      /events/external, /location/check-ins, /user/profile, /account, /user-settings and
+      /notification/myexeter/{device,preferences} - each returns 401 {"message":"Unauthorized"}
+      while unrouted paths return the gateway's 403 "Missing Authentication Token", so the
+      routes exist and are token-gated. /application-settings returns a structured 400
+      requiring a tenant header. Authentication is OAuth2 against an Exeter-owned AWS Cognito
+      user pool at exeter-auth-prod.auth.eu-west-2.amazoncognito.com. The app manifest
+      describes this as "the University of Exeter's public API", but no contract,
+      documentation, registration path or self-service credential is published and no
+      OpenAPI was found; nothing here is callable by a third party.
     humanURL: https://www.exeter.ac.uk/students/myexeter/
-    baseURL: https://m.exeter.ac.uk/
-    tags:
-    - Mobile
-    - Students
-    - Timetable
-    - Campus
-    - Private
-    tags_raw:
-    - Mobile
-    - Student
-    - Timetable
-    - Campus
-    - Private
+    baseURL: https://api.exeter.ac.uk
+    tags: [ Campus Life, Students, Events, Occupancy, Notifications, Mobile, OAuth2, Private ]
     properties:
       - type: Documentation
         url: https://www.exeter.ac.uk/students/myexeter/
+      - type: Authentication
+        url: https://exeter-auth-prod.auth.eu-west-2.amazoncognito.com
+  - aid: university-of-exeter:shibboleth-idp
+    name: University of Exeter Shibboleth Identity Provider
+    x-operator: federation
+    description: >-
+      Exeter operates its own SAML 2.0 Shibboleth identity provider with entityID
+      https://elibrary.exeter.ac.uk/idp/shibboleth. The IdP publishes its own metadata
+      directly (200, application/xml, 10,370 bytes) advertising SSO over HTTP-Redirect,
+      HTTP-POST, POST-SimpleSign and SOAP/ECP bindings plus SLO and artifact resolution,
+      with mdui:DisplayName and OrganizationName both "University of Exeter". The same
+      entity is served as signed metadata by the UK Access Management Federation MDQ and,
+      via eduGAIN interfederation, by InCommon's MDQ. This is institution-operated by
+      definition - the federation is shared, the IdP behind it is Exeter's - and is the
+      strongest machine-readable surface the institution runs. It is federation
+      infrastructure, not a self-service developer API.
+    humanURL: https://libguides.exeter.ac.uk/eresources/shibboleth
+    baseURL: https://elibrary.exeter.ac.uk/idp/shibboleth
+    tags: [ Identity Federation, SAML, Shibboleth, SSO, eduGAIN, UK Access Management Federation ]
+    properties:
+      - type: Documentation
+        url: https://libguides.exeter.ac.uk/eresources/shibboleth
+      - type: IdentityFederation
+        url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Felibrary.exeter.ac.uk%2Fidp%2Fshibboleth
+      - type: IdentityFederation
+        url: https://mdq.incommon.org/entities/https%3A%2F%2Felibrary.exeter.ac.uk%2Fidp%2Fshibboleth
+  - aid: university-of-exeter:entra-id-tenant
+    name: University of Exeter Microsoft Entra ID Tenant
+    x-operator: federation
+    description: >-
+      Exeter runs a Microsoft Entra ID tenant (912a5d77-fb98-4eee-af32-1334d8f04a53) used
+      for staff and student single sign-on; mytimetable.exeter.ac.uk redirects into it over
+      SAML 2.0. The tenant publishes standard machine-readable federation metadata - OpenID
+      Connect discovery at the v2.0 .well-known endpoint (200, application/json) and
+      WS-Federation/SAML federationmetadata.xml (200, 28,441 bytes, entityID
+      https://sts.windows.net/912a5d77-fb98-4eee-af32-1334d8f04a53/). The tenant is Exeter's;
+      the platform is Microsoft's. No application registration is open to the public.
+    humanURL: https://www.exeter.ac.uk/students/
+    baseURL: https://login.microsoftonline.com/912a5d77-fb98-4eee-af32-1334d8f04a53/v2.0/.well-known/openid-configuration
+    tags: [ Identity Federation, SAML, OpenID Connect, SSO, Entra ID, Microsoft ]
+    properties:
+      - type: IdentityFederation
+        url: https://login.microsoftonline.com/912a5d77-fb98-4eee-af32-1334d8f04a53/v2.0/.well-known/openid-configuration
+      - type: IdentityFederation
+        url: https://login.microsoftonline.com/912a5d77-fb98-4eee-af32-1334d8f04a53/federationmetadata/2007-06/federationmetadata.xml
+  - aid: university-of-exeter:ele-moodle
+    name: Exeter Learning Environment (ELE) - Moodle Web Services and LTI 1.3 Platform
+    x-operator: institution
+    description: >-
+      ELE is Exeter's virtual learning environment, a Moodle deployment on the institution's
+      own host ele.exeter.ac.uk. Two machine-readable surfaces are live: the Moodle Web
+      Services REST endpoint at /webservice/rest/server.php, which answers an unauthenticated
+      request with a well-formed invalidtoken exception rather than a 404, confirming web
+      services are enabled and token-gated; and the LTI 1.3 Advantage tool-platform endpoints
+      /mod/lti/certs.php (200, application/json, a one-key RSA JWKS) and /mod/lti/auth.php
+      (the OIDC authorization endpoint). Moodle's internal AJAX service at /lib/ajax/service.php
+      also answers with a structured JSON error. The deployment and the host are Exeter's;
+      the contract is Moodle's upstream API, so no specification is saved under this
+      institution. No token issuance is open to the public.
+    humanURL: https://ele.exeter.ac.uk/
+    baseURL: https://ele.exeter.ac.uk/webservice/rest/server.php
+    tags: [ Learning Management, Moodle, LTI, VLE, Education, Students ]
+    properties:
+      - type: Documentation
+        url: https://ele.exeter.ac.uk/
+      - type: Authentication
+        url: https://ele.exeter.ac.uk/mod/lti/certs.php
+  - aid: university-of-exeter:news-wordpress-rest
+    name: University of Exeter News WordPress REST API
+    x-operator: institution
+    description: >-
+      news.exeter.ac.uk is Exeter's own news and press-release site and exposes the WordPress
+      REST API openly at /wp-json/ - 20 registered namespaces, 553 routes, an empty
+      authentication requirement for reads, and X-WP-Total reporting 2,596 posts on
+      /wp/v2/posts. It is the only unauthenticated, machine-readable content API the
+      institution serves from its own domain, and it is how an agent should read Exeter
+      research announcements programmatically. The deployment and the content are Exeter's;
+      the contract is WordPress core's, so no specification is saved under this institution.
+    humanURL: https://news.exeter.ac.uk/
+    baseURL: https://news.exeter.ac.uk/wp-json/
+    tags: [ News, Content, WordPress, REST, Research, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://news.exeter.ac.uk/wp-json/
+      - type: Blog
+        url: https://news.exeter.ac.uk/
+  - aid: university-of-exeter:ore-figshare-tenancy
+    name: Open Research Exeter (ORE) - Figshare Tenancy
+    x-operator: tenant
+    description: >-
+      Open Research Exeter is Exeter's institutional research repository and it is a Figshare
+      tenancy, not institution-run software. ore.exeter.ac.uk is a CNAME to
+      proxy-eu-01.figshare.com; the host's AWS WAF challenge page sets
+      awsWafCookieDomainList to ['figshare.com']; item URLs follow Figshare's
+      /articles/{type}/{title}/{id} pattern; and Exeter's items carry Figshare group_id 58481
+      with handle prefix 10779/exe. Exeter's named scope on the platform is real and is
+      recorded here as a tenancy. The prior profile described ORE as a DSpace repository with
+      OAI-PMH at /repository/oai/request and a DSpace 7 REST API at /server/api; both were
+      inferred from DSpace defaults, neither exists, and both have been removed. Figshare's
+      generic v2 contract is not saved under this institution - it belongs to Figshare.
+    humanURL: https://ore.exeter.ac.uk/
+    baseURL: https://ore.exeter.ac.uk/
+    tags: [ Research Repository, Figshare, Research Data, Open Access, Tenant ]
+    properties:
+      - type: Documentation
+        url: https://www.exeter.ac.uk/research/researchdatamanagement/after/discovery/
+      - type: ResearchRepository
+        url: https://ore.exeter.ac.uk/
+  - aid: university-of-exeter:experts-symplectic-tenancy
+    name: Exeter Experts Directory - Symplectic Elements Discovery Tenancy
+    x-operator: tenant
+    description: >-
+      experts.exeter.ac.uk is the university's staff expertise, publications and research
+      output directory, and Exeter's own llms.txt names it as the authoritative source for
+      attributing research to named academics. It is a CNAME to uoe.discovery.symplectic.org
+      - a Symplectic Elements Discovery (Digital Science) tenancy. Every path returns the same
+      2,121-byte single-page-application shell titled "Discovery", so there is no
+      machine-readable interface to probe and no public API is exposed on the tenancy. The
+      tenancy is a real Exeter fact; the platform contract is Symplectic's.
+    humanURL: https://experts.exeter.ac.uk/
+    baseURL: https://experts.exeter.ac.uk/
+    tags: [ Research Repository, Expertise, Symplectic Elements, Publications, Tenant ]
+    properties:
+      - type: ResearchRepository
+        url: https://experts.exeter.ac.uk/
+  - aid: university-of-exeter:datacite-membership
+    name: DataCite Membership and Open Research Exeter DOI Registration
+    x-operator: registry
+    description: >-
+      Exeter is a registered DataCite member - provider symbol VUEX, name "University of
+      Exeter", memberType consortium_organization, rorId https://ror.org/03yghzc09, created
+      2020-09-01, with its DataCite contact website given as the university library. Its
+      repository is registered as DataCite client BL.EXETER, "Open Research Exeter", clientType
+      repository, url https://ore.exeter.ac.uk, created 2017-02-27, carrying 450 registered
+      DOIs and a re3data entry at https://doi.org/10.17616/R3033Z (https://www.re3data.org/repository/r3d100011202). This is a membership fact
+      about the institution, evidenced from DataCite's own API. DataCite's contract is
+      DataCite's and is not saved here.
+    humanURL: https://www.re3data.org/repository/r3d100011202
+    baseURL: https://api.datacite.org/clients/bl.exeter
+    tags: [ DataCite, DOI, Registry, Research Data, Persistent Identifiers ]
+    properties:
+      - type: Documentation
+        url: https://api.datacite.org/providers/vuex
+  - aid: university-of-exeter:crossref-membership
+    name: University of Exeter Press Crossref Membership
+    x-operator: registry
+    description: >-
+      The university's publishing arm is a Crossref member - member id 27616, primary name
+      "University of Exeter Press" - registering DOIs under prefixes 10.58182 and 10.47788.
+      This is an institutional membership fact evidenced from Crossref's own members API;
+      Crossref's contract belongs to Crossref and is not saved here.
+    humanURL: https://www.crossref.org/
+    baseURL: https://api.crossref.org/members/27616
+    tags: [ Crossref, DOI, Registry, Publishing, Persistent Identifiers ]
+    properties:
+      - type: Documentation
+        url: https://api.crossref.org/members/27616
+  - aid: university-of-exeter:ror-registration
+    name: University of Exeter ROR Registration
+    x-operator: registry
+    description: >-
+      Exeter is registered in the Research Organization Registry with ROR identifier
+      https://ror.org/03yghzc09, the identifier DataCite carries on the institution's VUEX
+      provider record. ROR's API is ROR's; the registration is Exeter's.
+    humanURL: https://ror.org/03yghzc09
+    baseURL: https://api.ror.org/organizations/03yghzc09
+    tags: [ ROR, Registry, Persistent Identifiers, Research ]
+    properties:
+      - type: Documentation
+        url: https://ror.org/03yghzc09
 common:
-  - type: DomainSecurity
-    url: security/university-of-exeter-domain-security.yml
   - type: Website
     url: https://www.exeter.ac.uk/
+  - type: LLMsTxt
+    url: https://www.exeter.ac.uk/llms.txt
   - type: GitHub
+    url: https://github.com/Uni-of-Exeter
+  - type: GitHubOrganization
     url: https://github.com/Uni-of-Exeter
   - type: SourceCode
     url: https://github.com/Uni-of-Exeter
@@ -135,16 +271,100 @@ common:
     url: https://www.linkedin.com/school/university-of-exeter/
   - type: Twitter
     url: https://twitter.com/UniofExeter
+  - type: Blog
+    url: https://news.exeter.ac.uk/
+  - type: Support
+    url: https://www.exeter.ac.uk/contact/
+  - type: PrivacyPolicy
+    url: https://www.exeter.ac.uk/about/oursite/privacy/
+  - type: TermsOfService
+    url: https://www.exeter.ac.uk/about/oursite/copyright/
+  - type: Accessibility
+    url: https://www.exeter.ac.uk/about/oursite/accessibility/
+  - type: DataProtection
+    url: https://www.exeter.ac.uk/about/oursite/dataprotection/
   - type: Authentication
     url: https://libguides.exeter.ac.uk/eresources/shibboleth
+  - type: IdentityFederation
+    url: https://elibrary.exeter.ac.uk/idp/shibboleth
+  - type: ResearchRepository
+    url: https://ore.exeter.ac.uk/
+  - type: LibraryCatalog
+    url: https://www.exeter.ac.uk/departments/library
+  - type: CourseCatalog
+    url: https://www.exeter.ac.uk/undergraduate-degrees/
+  - type: OpenData
+    url: https://news.exeter.ac.uk/wp-json/
+  - type: DomainSecurity
+    url: security/university-of-exeter-domain-security.yml
+  - type: Conformance
+    url: conformance/university-of-exeter-conformance.yml
+  - type: Authentication
+    url: authentication/university-of-exeter-authentication.yml
+  - type: Errors
+    url: errors/university-of-exeter-errors.yml
   - type: Plans
     url: plans/university-of-exeter-plans-pricing.yml
   - type: RateLimits
     url: rate-limits/university-of-exeter-rate-limits.yml
   - type: FinOps
     url: finops/university-of-exeter-finops.yml
+  - type: JSONLD
+    url: json-ld/university-of-exeter-context.jsonld
   - type: Review
     url: review.yml
+x-coverage:
+  state: gated
+  reason: auth_required
+  detail: >-
+    Exeter operates a real institution-owned API - api.exeter.ac.uk, an AWS API Gateway
+    deployment in eu-west-2 behind the MyExeter app - but every one of its routes is
+    OAuth2/Cognito gated and returns 401, no documentation, registration path or
+    specification is published anywhere on exeter.ac.uk, and there is no developer portal
+    (developer.exeter.ac.uk and developers.exeter.ac.uk do not resolve). Its identity
+    federation, Moodle web services and news WordPress REST API are readable but are
+    upstream contracts (Shibboleth, Moodle, WordPress) rather than Exeter-authored ones,
+    so no OpenAPI is saved under this institution. Its research repository ore.exeter.ac.uk
+    is a Figshare tenancy sitting behind an AWS WAF challenge that returns 202 with a
+    zero-length body to every client, so it is unreadable as well as vendor-contracted.
+    No specification, no self-service credential, no public contract - the footprint is
+    real but entirely credentialed.
+  evidence:
+  - url: https://api.exeter.ac.uk/content/posts/news
+    status: 401
+  - url: https://api.exeter.ac.uk/spaces/get-occupancy-data
+    status: 401
+  - url: https://api.exeter.ac.uk/application-settings
+    status: 400
+  - url: https://api.exeter.ac.uk/openapi.json
+    status: 403
+  - url: https://elibrary.exeter.ac.uk/idp/shibboleth
+    status: 200
+  - url: https://ele.exeter.ac.uk/mod/lti/certs.php
+    status: 200
+  - url: https://ele.exeter.ac.uk/webservice/rest/server.php
+    status: 200
+  - url: https://news.exeter.ac.uk/wp-json/
+    status: 200
+  - url: https://www.exeter.ac.uk/llms.txt
+    status: 200
+  - url: https://ore.exeter.ac.uk/repository/oai/request?verb=Identify
+    status: 202
+  - url: https://experts.exeter.ac.uk/ws/api
+    status: 200
+  - url: https://api.datacite.org/clients/bl.exeter
+    status: 200
+  checked: '2026-09-01'
+x-enrichment:
+  pipeline: pipeline-university.md
+  run: '2026-09-01'
+  operator_axis_settled: true
+  note: >-
+    Re-profiled under the university pipeline. Two hidden vendor tenancies were found behind
+    institution hostnames that the host-based audit read as institution-owned
+    (ore.exeter.ac.uk -> figshare.com, experts.exeter.ac.uk -> symplectic.org), and two
+    fabricated DSpace surfaces were removed. Four institution-operated surfaces the prior
+    profile did not hold were found and added.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
