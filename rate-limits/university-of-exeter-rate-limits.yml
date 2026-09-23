@@ -4,7 +4,9 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Exeter
 providerId: university-of-exeter
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
+generated: '2026-09-01'
+method: derived
 reconciled: false
 tags:
 - Education
@@ -12,21 +14,30 @@ tags:
 - University
 - Rate Limiting
 description: >-
-  University of Exeter does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
+  University of Exeter publishes no rate-limit policy for any surface it operates. No 429 was
+  triggered and no Retry-After, X-RateLimit-* or equivalent header was observed on any
+  Exeter host during probing. The only unauthenticated Exeter-hosted API,
+  news.exeter.ac.uk/wp-json/, carries WordPress core's defaults with nothing published on
+  top; every other surface is credentialed, so limits (if any) are set per credential and are
+  not visible externally.
+notes: >-
+  Derived from observation, not from a published Exeter policy - there is no rate-limit
+  documentation to cite. Corrected 2026-09-01: the prior version named OAI-PMH, IIIF and
+  library harvesting endpoints as throttled surfaces; Exeter operates none of those three.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/apis.yml
+- https://news.exeter.ac.uk/wp-json/wp/v2/posts
 responseCodes:
   throttled: 429
+  throttled_observed: false
 limits:
-- name: Default
+- name: Undeclared
   scope: client
   metric: requests-per-minute
-  limit: see service documentation
-  notes: No published global limit; large harvests may be rate-limited.
+  limit: not published
+  notes: >-
+    No published limit on any Exeter-operated surface, and no rate-limit header observed on
+    news.exeter.ac.uk/wp-json/, api.exeter.ac.uk or ele.exeter.ac.uk.
 policies:
 - name: Backoff Strategy
   description: Exponential backoff with jitter; honor Retry-After; harvest during off-peak hours.

@@ -4,7 +4,9 @@ schema: https://www.finops.org/framework/
 provider: University of Exeter
 providerId: university-of-exeter
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
+generated: '2026-09-01'
+method: derived
 reconciled: false
 tags:
 - Education
@@ -17,7 +19,10 @@ description: >-
   APIs carry no usage-based billing; there is no invoiced cost to allocate or optimize.
   FinOps relevance is limited to the institution's own internal cloud/infrastructure
   cost management, which is not publicly disclosed.
-notes: No public usage-based API billing; University of Exeter's APIs are free/open or affiliation-gated.
+notes: >-
+  Derived from apis.yml and the FinOps Framework, not from any Exeter disclosure. No public
+  usage-based API billing exists: one surface is free and unauthenticated
+  (news.exeter.ac.uk/wp-json/) and the rest are affiliation-gated at no charge.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/apis.yml
 - https://www.finops.org/framework/
@@ -48,7 +53,9 @@ principles:
 - name: Allocation
   description: Not applicable - no chargeable API spend to attribute.
 - name: Optimization
-  description: Harvest open endpoints efficiently to reduce load on institutional infrastructure.
+  description: >-
+    Harvest the one open endpoint (news.exeter.ac.uk/wp-json/) efficiently; no other Exeter
+    surface is reachable without a credential.
 - name: Accountability
   description: Respect terms of use and non-commercial conditions on open data.
 maintainers:

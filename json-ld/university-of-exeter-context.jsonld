@@ -38,13 +38,27 @@
     "Dataset": "schema:Dataset",
     "DataCatalog": "schema:DataCatalog",
     "Thesis": "schema:Thesis",
-    "ScholarlyArticle": "schema:ScholarlyArticle"
+    "ScholarlyArticle": "schema:ScholarlyArticle",
+    "identifier": "schema:identifier",
+    "operator": {
+      "@id": "exeter:operator"
+    },
+    "generated": {
+      "@id": "exeter:generated"
+    },
+    "method": {
+      "@id": "exeter:method"
+    },
+    "source": {
+      "@id": "exeter:source"
+    }
   },
   "@type": "CollegeOrUniversity",
   "name": "University of Exeter",
   "url": "https://www.exeter.ac.uk/",
-  "description": "Public research university in Devon, United Kingdom, and a member of the Russell Group. Operates the Open Research Exeter (ORE) DSpace repository, a Shibboleth/SAML identity provider, and the MyExeter mobile app backend.",
+  "description": "Public research university in Devon, United Kingdom, and a member of the Russell Group. Operates a Cognito-protected platform API behind the MyExeter app, its own Shibboleth SAML identity provider and a Microsoft Entra ID tenant, a Moodle VLE that is a live LTI 1.3 platform, and a public WordPress REST API on its news site. Its research repository (Open Research Exeter) is a Figshare tenancy and its expert directory is a Symplectic Elements tenancy; neither contract is Exeter's.",
   "sameAs": [
+    "https://ror.org/03yghzc09",
     "https://github.com/Uni-of-Exeter",
     "https://www.linkedin.com/school/university-of-exeter/",
     "https://twitter.com/UniofExeter"
@@ -52,31 +66,179 @@
   "api": [
     {
       "@type": "API",
-      "name": "Open Research Exeter (ORE) OAI-PMH",
-      "humanURL": "https://ore.exeter.ac.uk/repository/",
-      "baseURL": "https://ore.exeter.ac.uk/repository/oai/request",
-      "tags": ["Research", "Repository", "OAI-PMH", "Open Data", "DSpace", "Metadata"]
+      "name": "MyExeter Platform API",
+      "humanURL": "https://www.exeter.ac.uk/students/myexeter/",
+      "baseURL": "https://api.exeter.ac.uk",
+      "operator": "institution",
+      "tags": [
+        "Campus Life",
+        "Students",
+        "Events",
+        "Occupancy",
+        "Notifications",
+        "Mobile",
+        "OAuth2",
+        "Private"
+      ]
     },
     {
       "@type": "API",
-      "name": "Open Research Exeter (ORE) DSpace REST API",
-      "humanURL": "https://ore.exeter.ac.uk/repository/",
-      "baseURL": "https://ore.exeter.ac.uk/server/api",
-      "tags": ["Research", "Repository", "REST", "Open Data", "DSpace"]
-    },
-    {
-      "@type": "API",
-      "name": "University of Exeter Shibboleth Identity Provider (SAML SSO)",
+      "name": "University of Exeter Shibboleth Identity Provider",
       "humanURL": "https://libguides.exeter.ac.uk/eresources/shibboleth",
       "baseURL": "https://elibrary.exeter.ac.uk/idp/shibboleth",
-      "tags": ["Identity", "SAML", "Shibboleth", "SSO", "Authentication"]
+      "operator": "federation",
+      "tags": [
+        "Identity Federation",
+        "SAML",
+        "Shibboleth",
+        "SSO",
+        "eduGAIN",
+        "UK Access Management Federation"
+      ]
     },
     {
       "@type": "API",
-      "name": "MyExeter Mobile App Backend",
-      "humanURL": "https://www.exeter.ac.uk/students/myexeter/",
-      "baseURL": "https://m.exeter.ac.uk/",
-      "tags": ["Mobile", "Student", "Timetable", "Campus", "Private"]
+      "name": "University of Exeter Microsoft Entra ID Tenant",
+      "humanURL": "https://www.exeter.ac.uk/students/",
+      "baseURL": "https://login.microsoftonline.com/912a5d77-fb98-4eee-af32-1334d8f04a53/v2.0",
+      "operator": "federation",
+      "tags": [
+        "Identity Federation",
+        "SAML",
+        "OpenID Connect",
+        "SSO",
+        "Entra ID",
+        "Microsoft"
+      ]
+    },
+    {
+      "@type": "API",
+      "name": "Exeter Learning Environment (ELE) - Moodle Web Services and LTI 1.3 Platform",
+      "humanURL": "https://ele.exeter.ac.uk/",
+      "baseURL": "https://ele.exeter.ac.uk/webservice/rest/server.php",
+      "operator": "institution",
+      "tags": [
+        "Learning Management",
+        "Moodle",
+        "LTI",
+        "VLE",
+        "Education",
+        "Students"
+      ]
+    },
+    {
+      "@type": "API",
+      "name": "University of Exeter News WordPress REST API",
+      "humanURL": "https://news.exeter.ac.uk/",
+      "baseURL": "https://news.exeter.ac.uk/wp-json/",
+      "operator": "institution",
+      "tags": [
+        "News",
+        "Content",
+        "WordPress",
+        "REST",
+        "Research",
+        "Open Access"
+      ]
+    },
+    {
+      "@type": "API",
+      "name": "Open Research Exeter (ORE) - Figshare Tenancy",
+      "humanURL": "https://ore.exeter.ac.uk/",
+      "baseURL": "https://ore.exeter.ac.uk/",
+      "operator": "tenant",
+      "tags": [
+        "Research Repository",
+        "Figshare",
+        "Research Data",
+        "Open Access",
+        "Tenant"
+      ]
+    },
+    {
+      "@type": "API",
+      "name": "Exeter Experts Directory - Symplectic Elements Discovery Tenancy",
+      "humanURL": "https://experts.exeter.ac.uk/",
+      "baseURL": "https://experts.exeter.ac.uk/",
+      "operator": "tenant",
+      "tags": [
+        "Research Repository",
+        "Expertise",
+        "Symplectic Elements",
+        "Publications",
+        "Tenant"
+      ]
+    },
+    {
+      "@type": "API",
+      "name": "DataCite Membership and Open Research Exeter DOI Registration",
+      "humanURL": "https://commons.datacite.org/repositories/bl.exeter",
+      "baseURL": "https://api.datacite.org/clients/bl.exeter",
+      "operator": "registry",
+      "tags": [
+        "DataCite",
+        "DOI",
+        "Registry",
+        "Research Data",
+        "Persistent Identifiers"
+      ]
+    },
+    {
+      "@type": "API",
+      "name": "University of Exeter Press Crossref Membership",
+      "humanURL": "https://www.crossref.org/",
+      "baseURL": "https://api.crossref.org/members/27616",
+      "operator": "registry",
+      "tags": [
+        "Crossref",
+        "DOI",
+        "Registry",
+        "Publishing",
+        "Persistent Identifiers"
+      ]
+    },
+    {
+      "@type": "API",
+      "name": "University of Exeter ROR Registration",
+      "humanURL": "https://ror.org/03yghzc09",
+      "baseURL": "https://api.ror.org/organizations/03yghzc09",
+      "operator": "registry",
+      "tags": [
+        "ROR",
+        "Registry",
+        "Persistent Identifiers",
+        "Research"
+      ]
     }
-  ]
+  ],
+  "identifier": [
+    {
+      "@type": "schema:PropertyValue",
+      "propertyID": "ROR",
+      "value": "https://ror.org/03yghzc09"
+    },
+    {
+      "@type": "schema:PropertyValue",
+      "propertyID": "DataCite provider",
+      "value": "VUEX"
+    },
+    {
+      "@type": "schema:PropertyValue",
+      "propertyID": "DataCite client",
+      "value": "BL.EXETER"
+    },
+    {
+      "@type": "schema:PropertyValue",
+      "propertyID": "Crossref member",
+      "value": "27616"
+    },
+    {
+      "@type": "schema:PropertyValue",
+      "propertyID": "Entra ID tenant",
+      "value": "912a5d77-fb98-4eee-af32-1334d8f04a53"
+    }
+  ],
+  "generated": "2026-09-01",
+  "method": "derived",
+  "source": "apis.yml (regenerated 2026-09-01 under pipeline-university.md; the previous api[] carried two DSpace surfaces that do not exist)"
 }

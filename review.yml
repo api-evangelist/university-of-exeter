@@ -3,46 +3,116 @@ name: University of Exeter
 description: University of Exeter public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 reviews:
-  - date: '2026-06-03'
-    rating: 2
-    summary: >-
-      The University of Exeter has no dedicated public developer portal or
-      packaged API program. Confirmed live: the official website
-      (www.exeter.ac.uk, 200), the MyExeter mobile backend host
-      (m.exeter.ac.uk, 200), and the official GitHub organization
-      Uni-of-Exeter (200, verified via GitHub API with blog www.exeter.ac.uk
-      and twitter UniofExeter, 2 public repos including WSO2 MI artifacts).
-      The Open Research Exeter (ORE) DSpace repository host responds but
-      returns HTTP 202 with empty bodies on OAI-PMH/REST probes, indicating a
-      bot-mitigation gateway, so DSpace OAI-PMH and REST endpoints are
-      documented per platform defaults but could not be confirmed live. A
-      Shibboleth/SAML Identity Provider exists for federated library/SSO
-      access. No endpoints were fabricated; gated and unverified surfaces are
-      flagged honestly.
-    endpoints:
-      - url: https://www.exeter.ac.uk/
-        status: 200
-        note: Official institutional website, confirmed live.
-      - url: https://m.exeter.ac.uk/
-        status: 200
-        note: MyExeter mobile app host; backend APIs are private/undocumented.
-      - url: https://ore.exeter.ac.uk/repository/
-        status: 202
-        note: ORE DSpace repository behind bot-mitigation gateway (empty body).
-      - url: https://ore.exeter.ac.uk/repository/oai/request?verb=Identify
-        status: 202
-        note: DSpace OAI-PMH path; returned 202 empty body, not confirmable live.
-      - url: https://ore.exeter.ac.uk/server/api
-        status: 202
-        note: DSpace REST API path; returned 202 empty body, not confirmable live.
-      - url: https://elibrary.exeter.ac.uk/idp/shibboleth
-        status: 0
-        note: Shibboleth SAML IdP entityID; gated federated identity, not a public API.
-      - url: https://github.com/Uni-of-Exeter
-        status: 200
-        note: Official GitHub org, verified via GitHub API (2 public repos).
-      - url: https://www.linkedin.com/school/university-of-exeter/
-        status: 999
-        note: Valid LinkedIn school page; 999 is LinkedIn's automated-request block.
+- date: '2026-06-03'
+  rating: 2
+  summary: 'The University of Exeter has no dedicated public developer portal or packaged API program.
+    Confirmed live: the official website (www.exeter.ac.uk, 200), the MyExeter mobile backend host (m.exeter.ac.uk,
+    200), and the official GitHub organization Uni-of-Exeter (200, verified via GitHub API with blog www.exeter.ac.uk
+    and twitter UniofExeter, 2 public repos including WSO2 MI artifacts). The Open Research Exeter (ORE)
+    DSpace repository host responds but returns HTTP 202 with empty bodies on OAI-PMH/REST probes, indicating
+    a bot-mitigation gateway, so DSpace OAI-PMH and REST endpoints are documented per platform defaults
+    but could not be confirmed live. A Shibboleth/SAML Identity Provider exists for federated library/SSO
+    access. No endpoints were fabricated; gated and unverified surfaces are flagged honestly.'
+  endpoints:
+  - url: https://www.exeter.ac.uk/
+    status: 200
+    note: Official institutional website, confirmed live.
+  - url: https://m.exeter.ac.uk/
+    status: 200
+    note: MyExeter mobile app host; backend APIs are private/undocumented.
+  - url: https://ore.exeter.ac.uk/repository/
+    status: 202
+    note: ORE DSpace repository behind bot-mitigation gateway (empty body).
+  - url: https://ore.exeter.ac.uk/repository/oai/request?verb=Identify
+    status: 202
+    note: DSpace OAI-PMH path; returned 202 empty body, not confirmable live.
+  - url: https://ore.exeter.ac.uk/server/api
+    status: 202
+    note: DSpace REST API path; returned 202 empty body, not confirmable live.
+  - url: https://elibrary.exeter.ac.uk/idp/shibboleth
+    status: 0
+    note: Shibboleth SAML IdP entityID; gated federated identity, not a public API.
+  - url: https://github.com/Uni-of-Exeter
+    status: 200
+    note: Official GitHub org, verified via GitHub API (2 public repos).
+  - url: https://www.linkedin.com/school/university-of-exeter/
+    status: 999
+    note: Valid LinkedIn school page; 999 is LinkedIn's automated-request block.
+- date: '2026-09-01'
+  rating: 3
+  summary: 'Re-profiled under the university pipeline with the operator axis settled before anything was
+    saved. Two hidden vendor tenancies were found behind institution hostnames that a host-based verdict
+    reads as institution-owned: ore.exeter.ac.uk is a CNAME to proxy-eu-01.figshare.com (its AWS WAF challenge
+    page sets awsWafCookieDomainList to [''figshare.com''], and Exeter items carry Figshare group_id 58481
+    with handle prefix 10779/exe), and experts.exeter.ac.uk is a CNAME to uoe.discovery.symplectic.org.
+    The two DSpace surfaces the June profile recorded for ORE were inferred from platform defaults, do
+    not exist, and have been removed. Four institution-operated surfaces the prior profile did not hold
+    were found and added: api.exeter.ac.uk (an AWS API Gateway deployment in eu-west-2 whose routes were
+    confirmed by the 401-versus-403 split and whose OAuth2 is an Exeter-owned Cognito pool), the ELE Moodle
+    deployment as a live LTI 1.3 Advantage platform, the news WordPress REST API, and Exeter''s Microsoft
+    Entra ID tenant. The Shibboleth IdP was verified live and confirmed in both the UK Access Management
+    Federation and InCommon MDQ. A hand-authored llms.txt with an explicit Notes for agents section was
+    found at www.exeter.ac.uk/llms.txt. Exeter still publishes no OpenAPI, no developer portal and no
+    self-service credential.'
+  endpoints:
+  - url: https://api.exeter.ac.uk/user/profile
+    status: 401
+    note: MyExeter platform API route exists and is token-gated (routes return 401; unrouted paths return
+      403).
+  - url: https://api.exeter.ac.uk/spaces/get-occupancy-data
+    status: 401
+    note: Campus space occupancy route, institution-operated, credentialed.
+  - url: https://api.exeter.ac.uk/application-settings
+    status: 400
+    note: 'Structured application error: BAD_REQUEST, "tenant is required".'
+  - url: https://api.exeter.ac.uk/openapi.json
+    status: 403
+    note: Gateway default for an unrouted path — no specification is served.
+  - url: https://elibrary.exeter.ac.uk/idp/shibboleth
+    status: 200
+    note: Shibboleth IdP SAML 2.0 metadata, 10,370 bytes, DisplayName 'University of Exeter'.
+  - url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Felibrary.exeter.ac.uk%2Fidp%2Fshibboleth
+    status: 200
+    note: Signed metadata in the UK Access Management Federation MDQ. HTTPS on this MDQ host timed out
+      repeatedly; HTTP answered.
+  - url: https://mdq.incommon.org/entities/https%3A%2F%2Felibrary.exeter.ac.uk%2Fidp%2Fshibboleth
+    status: 200
+    note: Same entity served by InCommon MDQ via eduGAIN interfederation.
+  - url: https://login.microsoftonline.com/912a5d77-fb98-4eee-af32-1334d8f04a53/v2.0/.well-known/openid-configuration
+    status: 200
+    note: Exeter's own Entra ID tenant, OIDC discovery.
+  - url: https://ele.exeter.ac.uk/mod/lti/certs.php
+    status: 200
+    note: ELE Moodle LTI 1.3 Advantage JWKS — a live education-regime domain-standard conformance.
+  - url: https://ele.exeter.ac.uk/webservice/rest/server.php
+    status: 200
+    note: 'Moodle web services enabled; returns an invalidtoken exception (note: HTTP 200 on error).'
+  - url: https://news.exeter.ac.uk/wp-json/
+    status: 200
+    note: WordPress REST API, 20 namespaces, 553 routes, 2,596 posts. The only unauthenticated Exeter-hosted
+      API.
+  - url: https://www.exeter.ac.uk/llms.txt
+    status: 200
+    note: Hand-authored llms.txt, 6,612 bytes, with an explicit Notes for agents section.
+  - url: https://ore.exeter.ac.uk/repository/oai/request?verb=Identify
+    status: 202
+    note: AWS WAF challenge, zero-length body. The challenge page's awsWafCookieDomainList is ['figshare.com']
+      — ORE is a Figshare tenancy, not DSpace. Endpoint removed from the profile.
+  - url: https://experts.exeter.ac.uk/ws/api
+    status: 200
+    note: 'Soft-200: every path returns the same 2,121-byte SPA shell. Symplectic Elements Discovery tenancy,
+      no public API.'
+  - url: https://api.datacite.org/clients/bl.exeter
+    status: 200
+    note: DataCite repository client BL.EXETER, Open Research Exeter, 450 DOIs.
+  - url: https://api.datacite.org/providers/vuex
+    status: 200
+    note: DataCite provider VUEX, consortium_organization, ROR 03yghzc09.
+  - url: https://www.exeter.ac.uk/.well-known/security.txt
+    status: 404
+    note: No RFC 9116 security.txt on www or the apex.
+  - url: https://developer.exeter.ac.uk/
+    status: 0
+    note: Does not resolve. No developer portal exists (developers.exeter.ac.uk also NXDOMAIN).

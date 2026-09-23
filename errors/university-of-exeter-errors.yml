@@ -1,0 +1,68 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live unauthenticated probes of api.exeter.ac.uk and ele.exeter.ac.uk on 2026-09-01.
+  Exeter publishes no OpenAPI and no error documentation; every shape below was read off a
+  real response.
+note: >-
+  Three distinct error envelopes are in play across Exeter's surfaces, none of them
+  documented and none of them RFC 9457 problem+json. The AWS API Gateway envelope and the
+  MyExeter application envelope both appear on api.exeter.ac.uk, which means a client cannot
+  assume one shape from that host.
+formats:
+- name: AWS API Gateway default
+  media_type: application/json
+  shape: '{"message": string}'
+  applies_to: https://api.exeter.ac.uk
+  description: >-
+    Emitted by the gateway itself, before the application is reached. Distinguishes an
+    unrouted path from a gated one.
+  observed:
+  - status: 403
+    body: '{"message":"Missing Authentication Token"}'
+    example_url: https://api.exeter.ac.uk/openapi.json
+    meaning: no route matches this path
+  - status: 401
+    body: '{"message":"Unauthorized"}'
+    example_url: https://api.exeter.ac.uk/user/profile
+    meaning: route exists, no valid bearer token presented
+- name: MyExeter application error
+  media_type: application/json
+  shape: '{"error": {"code": string, "message": string, "type": string, "details": string}}'
+  applies_to: https://api.exeter.ac.uk
+  description: >-
+    A structured application-level envelope with a machine-readable code, a human message, an
+    error class and a details string. Reached only on routes that pass the gateway without a
+    token requirement.
+  observed:
+  - status: 400
+    body: '{"error":{"code":"BAD_REQUEST","message":"tenant is required","type":"ClientError","details":"tenant missing from header..."}}'
+    example_url: https://api.exeter.ac.uk/application-settings
+    meaning: required `tenant` request header absent
+- name: Moodle exception
+  media_type: application/xml
+  shape: '<EXCEPTION class><ERRORCODE/><MESSAGE/></EXCEPTION>'
+  applies_to: https://ele.exeter.ac.uk/webservice/rest/server.php
+  description: Moodle's own upstream web-service exception format, returned with HTTP 200.
+  observed:
+  - status: 200
+    body: '<EXCEPTION class="core\exception\moodle_exception"><ERRORCODE>invalidtoken</ERRORCODE><MESSAGE>Invalid token - token not found</MESSAGE></EXCEPTION>'
+    example_url: https://ele.exeter.ac.uk/webservice/rest/server.php
+    meaning: >-
+      no or invalid wstoken. Note the HTTP status is 200 - status codes are not a reliable
+      success signal on this surface.
+- name: Moodle AJAX error
+  media_type: application/json
+  shape: '{"error": string, "errorcode": string, "stacktrace": null, "debuginfo": null, "reproductionlink": null}'
+  applies_to: https://ele.exeter.ac.uk/lib/ajax/service.php
+  observed:
+  - status: 200
+    body: '{"error":"Coding error detected...Invalid json in request: Syntax error","errorcode":"codingerror",...}'
+    example_url: https://ele.exeter.ac.uk/lib/ajax/service.php
+    meaning: malformed request body, again returned with HTTP 200
+not_observed:
+- rfc9457-problem-details: >-
+    No application/problem+json response was returned by any Exeter host probed.
+- retry-after: >-
+    No 429 was triggered and no Retry-After header was observed on any surface; Exeter
+    publishes no rate-limit policy.

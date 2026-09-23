@@ -4,7 +4,9 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Exeter
 providerId: university-of-exeter
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
+generated: '2026-09-01'
+method: derived
 reconciled: false
 tags:
 - Education
@@ -12,22 +14,31 @@ tags:
 - University
 - Plans
 description: >-
-  University of Exeter is a non-commercial higher-education institution; its APIs are not sold
-  as a commercial product. Public APIs (library, repository, course, and open-metadata
-  interfaces) are offered free of charge, typically for non-commercial use. Most
-  administrative and identity APIs are not openly self-service and require institutional
-  affiliation, credentials, or federation membership rather than a paid plan.
+  University of Exeter is a non-commercial higher-education institution and publishes no
+  commercial API pricing of any kind. Exactly one Exeter-hosted API serves data without a
+  credential - the WordPress REST API on news.exeter.ac.uk. Everything else the institution
+  operates (the MyExeter platform API at api.exeter.ac.uk, Moodle web services on ELE, the
+  Shibboleth IdP, the Entra ID tenant) is gated by institutional affiliation or federation
+  membership rather than by payment, and none of it offers a self-service signup.
 notes: >-
-  No published per-seat or per-call commercial pricing. "Free / Open" reflects open
-  public endpoints; "Affiliation / Credentialed" reflects access gated by institutional
-  identity rather than payment.
+  No published per-seat or per-call pricing and no published plans document - the two plans
+  below are a derived characterisation of observed access conditions, not a published Exeter
+  price list. "Free / Open" covers only news.exeter.ac.uk/wp-json/;
+  "Affiliation / Credentialed" covers every other surface. Corrected 2026-09-01: the prior
+  version described free "library, repository, course and open-metadata interfaces", none of
+  which Exeter operates - the repository is a Figshare tenancy and no library or course API
+  was found.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/apis.yml
+- https://news.exeter.ac.uk/wp-json/
+- https://api.exeter.ac.uk/user/profile
 plans:
 - id: university-of-exeter-free-open
   name: Free / Open
   type: free
-  description: Public open APIs (metadata, library, repository, course data) offered at no charge, generally for non-commercial use.
+  description: >-
+    The single unauthenticated Exeter-hosted API - the WordPress REST API at
+    news.exeter.ac.uk/wp-json/ - is served at no charge with no registration.
   entries:
   - label: Open API Access
     name: open_api_access
@@ -42,7 +53,11 @@ plans:
 - id: university-of-exeter-affiliation
   name: Affiliation / Credentialed
   type: free
-  description: Administrative and identity APIs gated behind institutional SSO, client certificates, or federation membership rather than payment.
+  description: >-
+    The MyExeter platform API (OAuth2/Cognito), Moodle web services (wstoken), the Shibboleth
+    IdP and the Entra ID tenant are gated behind institutional identity or federation
+    membership rather than payment. No price, and no route to a credential for an
+    unaffiliated developer.
   entries:
   - label: Credentialed Access
     name: credentialed_access

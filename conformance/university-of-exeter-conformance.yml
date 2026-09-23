@@ -1,0 +1,128 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live HTTP/DNS probes of exeter.ac.uk hosts on 2026-09-01, plus the DataCite, Crossref, ROR
+  and ORCID public APIs and the UK Access Management Federation / InCommon MDQ services.
+  No claim here is taken from prose; every entry names the URL and status code it was read from.
+note: >-
+  Conformance targets are the standards[] of the Kin Score `education` regulatory regime.
+  Exeter publishes no OpenAPI, so nothing here is derived from a contract - all of it is
+  probed. Negatives are recorded as probed negatives, not as unchecked slots.
+standards:
+- id: lti
+  conforms: true
+  evidence: >-
+    ele.exeter.ac.uk is a Moodle LTI 1.3 Advantage tool platform. GET
+    https://ele.exeter.ac.uk/mod/lti/certs.php returns 200 application/json with a one-key
+    RSA JWKS (kty RSA, alg RS256, kid ba22b880d45468715649, 553 bytes). GET
+    https://ele.exeter.ac.uk/mod/lti/auth.php returns 200 - the LTI 1.3 OIDC authorization
+    endpoint. GET https://ele.exeter.ac.uk/mod/lti/services.php returns 405 with a JSON
+    body, the LTI Advantage services endpoint rejecting a GET.
+- id: shibboleth
+  conforms: true
+  evidence: >-
+    GET https://elibrary.exeter.ac.uk/idp/shibboleth returns 200 application/xml, 10,370
+    bytes - a Shibboleth EntityDescriptor with entityID
+    https://elibrary.exeter.ac.uk/idp/shibboleth, xmlns:shibmd namespace present,
+    mdui:DisplayName and OrganizationName "University of Exeter".
+- id: saml
+  conforms: true
+  evidence: >-
+    SAML 2.0 on two independent surfaces. (1) The Shibboleth IdP advertises SSO over
+    HTTP-Redirect, HTTP-POST, HTTP-POST-SimpleSign and SOAP/ECP bindings plus SLO and
+    ArtifactResolution. (2) The Exeter Entra ID tenant serves WS-Fed/SAML metadata at
+    https://login.microsoftonline.com/912a5d77-fb98-4eee-af32-1334d8f04a53/federationmetadata/2007-06/federationmetadata.xml
+    (200, 28,441 bytes, entityID https://sts.windows.net/912a5d77-fb98-4eee-af32-1334d8f04a53/),
+    and mytimetable.exeter.ac.uk redirects into it with a signed SAMLRequest.
+  federation_membership:
+  - federation: UK Access Management Federation
+    url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Felibrary.exeter.ac.uk%2Fidp%2Fshibboleth
+    status: 200
+    evidence: signed samlmetadata+xml, 5,894 bytes, validUntil 2026-09-22
+  - federation: InCommon (via eduGAIN interfederation)
+    url: https://mdq.incommon.org/entities/https%3A%2F%2Felibrary.exeter.ac.uk%2Fidp%2Fshibboleth
+    status: 200
+    evidence: signed samlmetadata+xml, 5,522 bytes, validUntil 2026-09-15
+- id: datacite
+  conforms: true
+  evidence: >-
+    DataCite provider VUEX "University of Exeter", memberType consortium_organization,
+    rorId https://ror.org/03yghzc09, created 2020-09-01
+    (https://api.datacite.org/providers/vuex, 200). DataCite repository client BL.EXETER
+    "Open Research Exeter", clientType repository, url https://ore.exeter.ac.uk, created
+    2017-02-27, re3data https://doi.org/10.17616/R3033Z, 450 registered DOIs
+    (https://api.datacite.org/clients/bl.exeter, 200).
+- id: crossref
+  conforms: true
+  evidence: >-
+    Crossref member 27616 "University of Exeter Press", DOI prefixes 10.58182 and 10.47788
+    (https://api.crossref.org/members?query=exeter, 200).
+- id: orcid
+  conforms: partial
+  evidence: >-
+    9,414 ORCID records carry a "University of Exeter" affiliation
+    (https://pub.orcid.org/v3.0/expanded-search/?q=affiliation-org-name:"University of Exeter",
+    200). Partial because affiliation records are asserted by individual researchers; no
+    Exeter-operated ORCID member integration, Trusted Party connection or institutional
+    ORCID landing page was found on any exeter.ac.uk host.
+- id: oai-pmh
+  conforms: false
+  evidence: >-
+    No OAI-PMH endpoint could be confirmed. The endpoint the previous profile recorded,
+    https://ore.exeter.ac.uk/repository/oai/request, is a DSpace path on a host that is a
+    CNAME to proxy-eu-01.figshare.com and it returns the site-wide AWS WAF challenge (202,
+    zero-length body) like every other path there. Figshare's own OAI-PMH service at
+    https://api.figshare.com/v2/oai (200) lists 30 sets, all item_type_* or portal_*, with
+    no Exeter-scoped set. No OAI base URL was found on any other exeter.ac.uk host.
+- id: scim
+  conforms: false
+  evidence: >-
+    https://api.exeter.ac.uk/scim/v2/Users returns the gateway's 403 "Missing Authentication
+    Token" (an unrouted path, unlike the app routes which return 401), and
+    https://ele.exeter.ac.uk/scim/v2/Users returns 404. No SCIM endpoint is published.
+- id: oneroster
+  conforms: false
+  evidence: No IMS OneRoster endpoint or claim found on any exeter.ac.uk host.
+- id: ed-fi
+  conforms: false
+  evidence: No Ed-Fi endpoint or claim found; Ed-Fi is a US K-12 standard with no UK HE uptake.
+- id: caliper
+  conforms: false
+  evidence: >-
+    No Caliper Analytics endpoint or event store was found; no Caliper claim appears on the
+    ELE Moodle deployment.
+- id: qti
+  conforms: false
+  evidence: No QTI import/export or assessment interoperability endpoint was found.
+adjacent:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    api.exeter.ac.uk authenticates against an Exeter-owned AWS Cognito user pool at
+    exeter-auth-prod.auth.eu-west-2.amazoncognito.com; /oauth2/authorize and /oauth2/token
+    are the flows carried in the shipped MyExeter application bundle. Token issuance is not
+    open to the public.
+- id: openid-connect
+  conforms: true
+  evidence: >-
+    https://login.microsoftonline.com/912a5d77-fb98-4eee-af32-1334d8f04a53/v2.0/.well-known/openid-configuration
+    returns 200 application/json (1,964 bytes) with token_endpoint, jwks_uri and
+    token_endpoint_auth_methods_supported for Exeter's Entra ID tenant.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    https://www.exeter.ac.uk/llms.txt returns 200, 6,612 bytes - a hand-authored file with an
+    explicit "Notes for agents" section (cite individual course pages, check the admissions
+    cycle label, treat /clearing/ as seasonal, prefer experts.exeter.ac.uk for staff
+    attribution) plus curated sections for Study, Applying, Research and academic subdomains.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    https://www.exeter.ac.uk/.well-known/security.txt returns 404 (a soft-404 HTML body of
+    34,073 bytes served with status 404). No security.txt on the apex either.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document was found. /openapi.json, /swagger.json, /docs and
+    /.well-known/openapi.json on api.exeter.ac.uk all return the gateway 403; no
+    developer.exeter.ac.uk or developers.exeter.ac.uk host resolves.
