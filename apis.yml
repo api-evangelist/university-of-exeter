@@ -153,25 +153,20 @@ apis:
         url: https://ele.exeter.ac.uk/
       - type: Authentication
         url: https://ele.exeter.ac.uk/mod/lti/certs.php
-  - aid: university-of-exeter:news-wordpress-rest
-    name: University of Exeter News WordPress REST API
-    x-operator: institution
-    description: >-
-      news.exeter.ac.uk is Exeter's own news and press-release site and exposes the WordPress
-      REST API openly at /wp-json/ - 20 registered namespaces, 553 routes, an empty
-      authentication requirement for reads, and X-WP-Total reporting 2,596 posts on
-      /wp/v2/posts. It is the only unauthenticated, machine-readable content API the
-      institution serves from its own domain, and it is how an agent should read Exeter
-      research announcements programmatically. The deployment and the content are Exeter's;
-      the contract is WordPress core's, so no specification is saved under this institution.
-    humanURL: https://news.exeter.ac.uk/
-    baseURL: https://news.exeter.ac.uk/wp-json/
-    tags: [ News, Content, WordPress, REST, Research, Open Access ]
+  - aid: university-of-exeter:news-exeter-ac-uk-website-wordpress-rest
+    name: University of Exeter Website (WordPress REST)
+    description: 'The public WordPress REST API (wp-json) of the University of Exeter website at news.exeter.ac.uk:
+      the route index of the site''s content management system, catalogued as one site surface rather than
+      as separate APIs.'
+    baseURL: https://news.exeter.ac.uk/wp-json
+    tags:
+    - WordPress
+    x-surface: platform-generated
     properties:
-      - type: Documentation
-        url: https://news.exeter.ac.uk/wp-json/
-      - type: Blog
-        url: https://news.exeter.ac.uk/
+    - type: Documentation
+      url: https://news.exeter.ac.uk/wp-json
+    x-platform: wordpress
+    x-platform-surface: rest
   - aid: university-of-exeter:ore-figshare-tenancy
     name: Open Research Exeter (ORE) - Figshare Tenancy
     x-operator: tenant
@@ -195,6 +190,7 @@ apis:
       - type: ResearchRepository
         url: https://ore.exeter.ac.uk/
   - aid: university-of-exeter:experts-symplectic-tenancy
+    x-published: false
     name: Exeter Experts Directory - Symplectic Elements Discovery Tenancy
     x-operator: tenant
     description: >-
