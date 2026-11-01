@@ -1,4 +1,4 @@
-# University of Exeter (university-of-exeter)
+# University of Exeter
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,87 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Exeter is a public research university in Devon, United Kingdom, and a member of the Russell Group, with campuses at Streatham and St Luke's in Exeter and Penryn in Cornwall. This repository catalogs the institution's public developer and API footprint as an [APIs.json](https://apisjson.org) provider profile. Exeter publishes no developer portal and no OpenAPI. It does operate several real machine-readable surfaces — a Cognito-protected platform API behind the MyExeter app, its own Shibboleth SAML identity provider, a Microsoft Entra ID tenant, a Moodle VLE that is a live LTI 1.3 platform, and a public WordPress REST API on its news site — and it maintains a hand-authored `llms.txt` with explicit guidance for agents.
+The University of Exeter is a public research university in Devon, United Kingdom, and a member of the Russell Group, with campuses at Streatham and St Luke's in Exeter and Penryn in Cornwall. It operates no public developer portal and publishes no OpenAPI, and most of what appears to be an Exeter API is a vendor platform running under an exeter.ac.uk hostname. What Exeter genuinely operates is: a Cognito-protected platform API at api.exeter.ac.uk behind the MyExeter app (campus events, space occupancy, notifications, profile - every route returns 401 without a token and none are documented); its own Shibboleth SAML identity provider, published in both the UK Access Management Federation and InCommon/eduGAIN metadata; a Microsoft Entra ID tenant fronting SSO for timetabling; a Moodle VLE at ele.exeter.ac.uk that is a live LTI 1.3 platform and exposes Moodle's own web-service endpoint; and a public WordPress REST API on its news site. Its research repository Open Research Exeter is a Figshare tenancy, and its expert profiles are a Symplectic Elements tenancy - neither contract is Exeter's engineering. Exeter also maintains a hand-authored llms.txt with explicit guidance for agents, which is rare in this cohort.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/university-of-exeter/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=university-of-exeter-api-evangelist&utm_content=repo
+**Areas:** University · Higher Education · Education · Research · United Kingdom · Russell Group · Identity Federation · Research Repository · LMS · Campus Life
 
-## Type
+## University of Exeter on APIs.io
 
-- university / Public Research University
-- Index
-- Consumer
-- 3rd-Party
+Everything profiled for University of Exeter is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/university-of-exeter/](https://apis.io/providers/university-of-exeter/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (10)
 
-University, Higher Education, Education, Research, United Kingdom, Russell Group, Identity Federation, Research Repository, Learning Management, Campus Life
+- [MyExeter Platform API](https://apis.io/apis/university-of-exeter/myexeter-platform-api/) — api.exeter.ac.uk is an institution-operated AWS API Gateway deployment in eu-west-2 that serves the MyExeter student app (the Flutter PWA at m.exeter.ac.uk…
+- [University of Exeter Shibboleth Identity Provider](https://apis.io/apis/university-of-exeter/shibboleth-idp/) — Exeter operates its own SAML 2.0 Shibboleth identity provider with entityID https://elibrary.exeter.ac.uk/idp/shibboleth. The IdP publishes its own metadata…
+- [University of Exeter Microsoft Entra ID Tenant](https://apis.io/apis/university-of-exeter/entra-id-tenant/) — Exeter runs a Microsoft Entra ID tenant (912a5d77-fb98-4eee-af32-1334d8f04a53) used for staff and student single sign-on; mytimetable.exeter.ac.uk redirects…
+- [Exeter Learning Environment (ELE) - Moodle Web Services and LTI 1.3 Platform](https://apis.io/apis/university-of-exeter/ele-moodle/) — ELE is Exeter's virtual learning environment, a Moodle deployment on the institution's own host ele.exeter.ac.uk. Two machine-readable surfaces are live:…
+- [University of Exeter Website (WordPress REST)](https://apis.io/apis/university-of-exeter/news-exeter-ac-uk-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the University of Exeter website at news.exeter.ac.uk: the route index of the site's content management system,…
+- [Open Research Exeter (ORE) - Figshare Tenancy](https://apis.io/apis/university-of-exeter/ore-figshare-tenancy/) — Open Research Exeter is Exeter's institutional research repository and it is a Figshare tenancy, not institution-run software. ore.exeter.ac.uk is a CNAME…
+- [Exeter Experts Directory - Symplectic Elements Discovery Tenancy](https://apis.io/apis/university-of-exeter/experts-symplectic-tenancy/) — experts.exeter.ac.uk is the university's staff expertise, publications and research output directory, and Exeter's own llms.txt names it as the…
+- [DataCite Membership and Open Research Exeter DOI Registration](https://apis.io/apis/university-of-exeter/datacite-membership/) — Exeter is a registered DataCite member - provider symbol VUEX, name "University of Exeter", memberType consortium_organization, rorId…
+- [University of Exeter Press Crossref Membership](https://apis.io/apis/university-of-exeter/crossref-membership/) — The university's publishing arm is a Crossref member - member id 27616, primary name "University of Exeter Press" - registering DOIs under prefixes 10.58182…
+- [University of Exeter ROR Registration](https://apis.io/apis/university-of-exeter/ror-registration/) — Exeter is registered in the Research Organization Registry with ROR identifier https://ror.org/03yghzc09, the identifier DataCite carries on the…
 
-## Who operates what
+### Published properties
 
-Every surface below carries an `x-operator` in `apis.yml`. A university is a federation of buyers, and most of what looks like an institutional API is a vendor's contract running under an institutional hostname.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### Institution-operated
+#### JSON-LD (1)
 
-- **MyExeter Platform API** (`x-operator: institution`) — `https://api.exeter.ac.uk`, an AWS API Gateway deployment in eu-west-2 serving the MyExeter app. Routes for campus events, space occupancy, check-ins, notifications and profile all return `401 {"message":"Unauthorized"}`, while unrouted paths return the gateway's `403 Missing Authentication Token`. OAuth2 against an Exeter-owned AWS Cognito user pool. No documentation, no registration, no specification.
-- **Exeter Learning Environment (ELE)** (`x-operator: institution`) — Moodle at `ele.exeter.ac.uk`. Web services are enabled and token-gated, and the site is a live LTI 1.3 Advantage tool platform (`/mod/lti/certs.php` serves an RSA JWKS). The contract is Moodle's, so no spec is saved here.
-- **News WordPress REST API** (`x-operator: institution`) — `https://news.exeter.ac.uk/wp-json/`, 20 namespaces, 553 routes, 2,596 posts, open for reads. The only unauthenticated Exeter-hosted API. The contract is WordPress core's.
+Linked-data contexts for the provider's vocabulary.
 
-### Federation (institution-operated by definition)
+- [University Of Exeter Context](https://apis.io/jsonld/university-of-exeter/university-of-exeter-context/)
 
-- **Shibboleth Identity Provider** — entityID `https://elibrary.exeter.ac.uk/idp/shibboleth`, publishing its own SAML 2.0 metadata and served as signed metadata by both the UK Access Management Federation MDQ and InCommon's MDQ via eduGAIN.
-- **Microsoft Entra ID tenant** — `912a5d77-fb98-4eee-af32-1334d8f04a53`, with live OIDC discovery and WS-Fed/SAML federation metadata; `mytimetable.exeter.ac.uk` federates into it.
+#### Security (2)
 
-### Tenant (Exeter's data, a vendor's contract)
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Open Research Exeter (ORE)** — a **Figshare** tenancy. `ore.exeter.ac.uk` is a CNAME to `proxy-eu-01.figshare.com`; Exeter's items carry Figshare `group_id` 58481 and handle prefix `10779/exe`. It is **not** a DSpace repository — see Corrections.
-- **Exeter Experts directory** — a **Symplectic Elements Discovery** tenancy; `experts.exeter.ac.uk` is a CNAME to `uoe.discovery.symplectic.org`.
+- [University Of Exeter Authentication](https://apis.io/security/university-of-exeter/university-of-exeter-authentication/)
+- [University Of Exeter Domain Security](https://apis.io/security/university-of-exeter/university-of-exeter-domain-security/)
 
-### Registry membership
+#### Plans and pricing (1)
 
-- **DataCite** — provider `VUEX`, repository client `BL.EXETER` ("Open Research Exeter", 450 DOIs, re3data `10.17616/R3033Z`).
-- **Crossref** — member `27616`, University of Exeter Press, prefixes `10.58182` and `10.47788`.
-- **ROR** — `https://ror.org/03yghzc09`.
+Published plans, tiers and prices.
 
-## Corrections (2026-09-01)
+- [University Of Exeter Plans Pricing](https://apis.io/plans/university-of-exeter/university-of-exeter-plans-pricing/)
 
-The June 2026 profile described ORE as a DSpace repository and recorded two endpoints for it — an OAI-PMH interface at `/repository/oai/request` and a DSpace 7 REST API at `/server/api`. Both were inferred from DSpace platform defaults rather than observed; ORE is a Figshare tenancy and neither endpoint exists. Both entries have been removed and replaced with a tenancy record. The MyExeter entry's `baseURL` pointed at `m.exeter.ac.uk`, which is the Flutter web client, not the API; it now points at `api.exeter.ac.uk`. The plans, rate-limit and FinOps artifacts asserted free "library, repository, course and open-metadata" APIs and throttled "OAI-PMH, IIIF and library" harvesting endpoints — Exeter operates none of those — and have been corrected and provenance-stamped.
+#### Rate limits (1)
 
-## Artifacts
+Published request limits.
 
-- [conformance/university-of-exeter-conformance.yml](conformance/university-of-exeter-conformance.yml) — probed conformance against the `education` regime standards (LTI, Shibboleth, SAML, DataCite and Crossref confirmed; OAI-PMH, SCIM, OneRoster, Ed-Fi, Caliper and QTI probed negative)
-- [authentication/university-of-exeter-authentication.yml](authentication/university-of-exeter-authentication.yml)
-- [errors/university-of-exeter-errors.yml](errors/university-of-exeter-errors.yml)
-- [plans/university-of-exeter-plans-pricing.yml](plans/university-of-exeter-plans-pricing.yml)
-- [rate-limits/university-of-exeter-rate-limits.yml](rate-limits/university-of-exeter-rate-limits.yml)
-- [finops/university-of-exeter-finops.yml](finops/university-of-exeter-finops.yml)
-- [json-ld/university-of-exeter-context.jsonld](json-ld/university-of-exeter-context.jsonld)
-- [security/university-of-exeter-domain-security.yml](security/university-of-exeter-domain-security.yml)
+- [University Of Exeter Rate Limits](https://apis.io/rate-limits/university-of-exeter/university-of-exeter-rate-limits/)
 
-No `openapi/` directory exists in this repository, and that is correct: Exeter publishes no OpenAPI, and the contracts behind its readable surfaces belong upstream to Moodle, WordPress, Shibboleth, Figshare and Symplectic.
+#### FinOps (1)
 
-## Timestamps
+What the API costs to run, by operation.
 
-- Created: 2026-06-03
-- Modified: 2026-09-01
+- [University Of Exeter Finops](https://apis.io/finops/university-of-exeter/university-of-exeter-finops/)
 
-## Common Properties
+## Where to find this API
 
-- Website: https://www.exeter.ac.uk/
-- llms.txt: https://www.exeter.ac.uk/llms.txt
-- GitHub: https://github.com/Uni-of-Exeter
-- LinkedIn: https://www.linkedin.com/school/university-of-exeter/
-- Twitter: https://twitter.com/UniofExeter
-- Blog: https://news.exeter.ac.uk/
-- Privacy: https://www.exeter.ac.uk/about/oursite/privacy/
-- Copyright and disclaimer: https://www.exeter.ac.uk/about/oursite/copyright/
-- Accessibility: https://www.exeter.ac.uk/about/oursite/accessibility/
-- Authentication: https://libguides.exeter.ac.uk/eresources/shibboleth
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-## Notes
+- [Website](https://www.exeter.ac.uk/)
+- [Support](https://www.exeter.ac.uk/contact/)
+- [Blog](https://news.exeter.ac.uk/)
+- [Terms of service](https://www.exeter.ac.uk/about/oursite/copyright/)
+- [Privacy policy](https://www.exeter.ac.uk/about/oursite/privacy/)
+- [GitHub](https://github.com/Uni-of-Exeter)
 
-This profile reflects only publicly confirmable surfaces; no endpoints were fabricated and every status code cited was observed on 2026-09-01. Exeter has no public developer portal (`developer.exeter.ac.uk` and `developers.exeter.ac.uk` do not resolve) and no self-service credential for any surface it operates. `ore.exeter.ac.uk` sits behind an AWS WAF challenge that returns HTTP 202 with a zero-length body to every client, so nothing on it is readable; the WAF challenge page itself is what identified the host as Figshare. `srs.exeter.ac.uk` runs Tribal SITS:Vision and `libguides.exeter.ac.uk` is a Springshare tenancy; neither exposes a public API and neither is recorded as one.
+## API Evangelist rating
 
-## Maintainers
+**Kin Score 26.8** — thin · rubric 0.24.0 · scored 2026-10-17
 
-- Kin Lane — kin@apievangelist.com
+| Facet | Score |
+|---|---|
+| Discoverability | 69.6 |
+| Contract quality | 14.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 26.3 |
+
+**Agent readiness 3.1** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 32.4** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/university-of-exeter/](https://apis.io/providers/university-of-exeter/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for University of Exeter: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/university-of-exeter/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
